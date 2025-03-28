@@ -1,0 +1,46 @@
+{% extends 'inventory/base.html' %}
+{% block title %}{{ header }} {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Supplier Name</th>
+                        <th scope="col">Supplier Email</th>
+                        {% comment %} <th scope="col">Category</th>
+                        <th scope="col">Description</th> {% endcomment %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for supplier in suppliers %}
+                    <tr>
+                        <td>{{ supplier.name }}</td>
+                        <td>{{ supplier.contact_email }}</td>
+                        {% comment %} <td>{{ product.category }}</td>
+                        <td>{{ product.description }}</td> {% endcomment %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if user.is_staff and user.is_superuser %}
+        <div class="col-md-4">
+            <form method="POST">
+                <h4>Add a New Supplier</h4>
+                <hr>
+                {% csrf_token %}
+                {{ form|crispy}}
+                <br>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="col-md-4">
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

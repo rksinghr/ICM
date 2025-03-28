@@ -1,0 +1,8 @@
+<h1>Price Comparison for {{ equipment.name }}</h1>
+<ul>
+    {% for price in prices %}
+        <li>{{ price.supplier.name }}: ${{ price.price }}</li>
+    {% endfor %}
+</ul>
+
+<p>Cheapest Option: {{ lowest_price.supplier.name }} - ${{ lowest_price.price }}</p>

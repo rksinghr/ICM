@@ -1,0 +1,49 @@
+{% extends 'inventory/base.html' %}
+{% block title %}{{ header }} {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Equipment Name</th>
+                        <th scope="col">Supplier Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Date_Added</th>
+                        <th scope="col">Date_Effective</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for price in prices %}
+                    <tr>
+                        <td>{{ price.equipment }}</td>
+                        <td>{{ price.supplier }}</td>
+                        <td>{{ price.price }}</td>
+                        <td>{{ price.date_added }}</td>
+                        <td>{{ price.effective_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if user.is_staff and user.is_superuser %}
+        <div class="col-md-4">
+            <form method="POST">
+                <h4>Add Price</h4>
+                <hr>
+                {% csrf_token %}
+                {{ form|crispy}}
+                <br>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="col-md-4">
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

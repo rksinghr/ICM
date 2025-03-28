@@ -1,0 +1,8 @@
+<h1>Equipment List</h1>
+<ul>
+    {% for equipment in equipments %}
+        <li>
+            <a href="{% url 'price_comparison' equipment.id %}">{{ equipment.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
