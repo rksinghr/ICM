@@ -1,0 +1,46 @@
+{% extends 'inventory/base.html' %}
+{% block title %}{{ header }} {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Equipment Name</th>
+                        <th scope="col">Equipment Description</th>
+                        {% comment %} <th scope="col">Category</th>
+                        <th scope="col">Description</th> {% endcomment %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for equipment in equipments %}
+                    <tr>
+                        <td><a href="{% url 'price_comparison' equipment.id %}">{{ equipment.name }}</a></td>
+                        <td>{{ equipment.description }}</td>
+                        {% comment %} <td>{{ product.category }}</td>
+                        <td>{{ product.description }}</td> {% endcomment %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if user.is_staff and user.is_superuser %}
+        <div class="col-md-4">
+            <form method="POST">
+                <h4>Add a New Equipment</h4>
+                <hr>
+                {% csrf_token %}
+                {{ form|crispy}}
+                <br>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="col-md-4">
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
